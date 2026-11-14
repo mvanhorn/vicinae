@@ -288,6 +288,11 @@ set(SRCS
 
 	src/extension/extension.hpp
 	src/extension/extension.cpp
+	src/extension/extension-tool.hpp
+	src/extension/extension-preferences.hpp
+	src/extension/extension-tool.cpp
+	src/extension/headless-command-runner.hpp
+	src/extension/headless-command-runner.cpp
 
 	src/extension/extension-command.hpp
 	src/extension/extension-command.cpp
@@ -662,10 +667,10 @@ set(SRCS
 	src/services/ai/speech-language-catalogue.hpp
 	src/services/ai/cli/cli-process.hpp
 	src/services/ai/cli/cli-process.cpp
-	src/services/ai/cli/claude-code-provider.hpp
-	src/services/ai/cli/claude-code-provider.cpp
-	src/services/ai/cli/codex-provider.hpp
-	src/services/ai/cli/codex-provider.cpp
+	src/services/ai/acp/acp-provider.hpp
+	src/services/ai/acp/acp-provider.cpp
+	src/services/ai/mcp/mcp-server.hpp
+	src/services/ai/mcp/mcp-server.cpp
 	src/services/ai/ollama/ollama-ai-provider.hpp
 	src/services/ai/ollama/ollama-ai-provider.cpp
 	src/services/ai/mistral/mistral-provider.hpp
@@ -1531,6 +1536,7 @@ set(VICINAE_QML_FILES
 	src/ui/qml/settings/AIProviderView.qml
 	src/ui/qml/settings/AIModelRow.qml
 	src/ui/qml/settings/AIModelDeleteDialog.qml
+	src/ui/qml/settings/AIProviderErrorDialog.qml
 	src/ui/qml/settings/AIProviderSetupDialog.qml
 	src/ui/qml/settings/SettingsSectionTitle.qml
 	src/ui/qml/form/ShortcutRecorderField.qml
@@ -1767,8 +1773,10 @@ qt_add_translations(${TARGET}
 	TS_FILE_BASE vicinae
 	TS_FILES
 		${CMAKE_CURRENT_SOURCE_DIR}/translations/vicinae_de.ts
+		${CMAKE_CURRENT_SOURCE_DIR}/translations/vicinae_es_ES.ts
 		${CMAKE_CURRENT_SOURCE_DIR}/translations/vicinae_fr.ts
 		${CMAKE_CURRENT_SOURCE_DIR}/translations/vicinae_it.ts
+		${CMAKE_CURRENT_SOURCE_DIR}/translations/vicinae_ko.ts
 		${CMAKE_CURRENT_SOURCE_DIR}/translations/vicinae_pl.ts
 		${CMAKE_CURRENT_SOURCE_DIR}/translations/vicinae_ru.ts
 		${CMAKE_CURRENT_SOURCE_DIR}/translations/vicinae_uk.ts
@@ -1800,11 +1808,14 @@ if (BUILD_TESTS AND UNIX AND NOT APPLE)
 		src/services/builtin-icon/builtin-icon.cpp
 		src/services/audio-control/pactl/pactl-audio-control.cpp
 		src/services/clipboard/clipboard-mime.cpp
+		src/services/extension-registry/extension-manifest.cpp
+		src/utils/utils.cpp
 		tests/pactl-audio-control.cpp
 		tests/clipboard-mime.cpp
 		src/services/tray-host/sni/sni-watcher.hpp
 		src/services/tray-host/sni/sni-watcher.cpp
 		tests/sni-watcher.cpp
+		tests/extension-manifest.cpp
 	)
 	target_link_libraries(${TEST_TARGET} PRIVATE vicinae::common Qt6::Concurrent glaze::glaze)
 	target_link_libraries(${TEST_TARGET} PRIVATE Catch2::Catch2WithMain Qt6::Core Qt6::Gui Qt6::DBus)
